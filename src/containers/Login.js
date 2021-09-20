@@ -61,15 +61,7 @@ const Login = props => {
                                 maxWidth={{sm: '85vw', md: '40vw', lg: '30vw'}}
                                 mx="auto"
                             >
-                                <Text
-                                    fontSize="xl"
-                                    my="7"
-                                    fontWeight="bold"
-                                    textAlign="center"
-                                    color="#13344C"
-                                >
-                                    YourFileKeeper Login
-                                </Text>
+                            
                                 {/* Username */}
                                 <CustomInput label="Username" name="username" type="text"/>
                                 {/* Password */}
