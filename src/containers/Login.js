@@ -29,6 +29,8 @@ const Login = props => {
                             password: values.password,
                         };
                         try {
+                            console.log(payload);
+
                             const result = await axios.put(`${process.env.REACT_APP_API_HOST}/session`, payload);
                             if (result) {
                                 cookie.save(process.env.REACT_APP_SESSION_COOKIE_NAME, result.data.data.token, {
@@ -75,7 +77,7 @@ const Login = props => {
                                 {/* Login */}
                                 <Box px="2">
                                     {props.isLoggedIn ? (
-                                        <Redirect to="/manage-files"/>
+                                        <Redirect to="/"/>
                                     ) : (<>
                                         <Button
                                             mt="2"

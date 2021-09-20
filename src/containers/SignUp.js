@@ -74,7 +74,7 @@ const SignUp = (props) => {
                                 {/* Login */}
                                 <Box px="2">
                                     {props.isLoggedIn ? (
-                                        <Redirect to="/manage-files"/>
+                                        <Redirect to="/"/>
                                     ) : (<>
                                         <Button
                                             mt="2"
