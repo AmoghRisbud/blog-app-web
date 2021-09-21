@@ -1,5 +1,5 @@
 import cookie from 'react-cookies';
-import {Box, Button, Text} from '@chakra-ui/react';
+import {Box, Button} from '@chakra-ui/react';
 import React from 'react';
 import {Formik, Form} from 'formik';
 import * as Yup from 'yup';
@@ -23,20 +23,19 @@ const Login = props => {
                             .required('Required'),
                         password: Yup.string().required('Required'),
                     })}
-                    onSubmit={async (values, {setSubmitting, setErrors}) => {
+                    onSubmit={async (values, { setErrors}) => {
                         let payload = {
                             username: values.username,
                             password: values.password,
                         };
                         try {
-                            console.log(payload);
-
                             const result = await axios.put(`${process.env.REACT_APP_API_HOST}/session`, payload);
                             if (result) {
                                 cookie.save(process.env.REACT_APP_SESSION_COOKIE_NAME, result.data.data.token, {
                                     path: '/',
                                 });
                                 props.setIsLoggedIn(true);
+                                props.setuserId(result.data.data.userId);
                             }
                         } catch (err) {
                             if (err.response.data.errors) {
@@ -46,14 +45,12 @@ const Login = props => {
                     }}
                 >
                     {({
-                          values,
+
                           errors,
                           touched,
-                          handleChange,
-                          handleBlur,
-                          handleSubmit,
+
                           isSubmitting,
-                          isValidating,
+
                       }) => (
                         <Form>
                             <Box
@@ -61,7 +58,7 @@ const Login = props => {
                                 maxWidth={{sm: '85vw', md: '40vw', lg: '30vw'}}
                                 mx="auto"
                             >
-                            
+
                                 {/* Username */}
                                 <CustomInput label="Username" name="username" type="text"/>
                                 {/* Password */}
@@ -71,31 +68,31 @@ const Login = props => {
                                     {props.isLoggedIn ? (
                                         <Redirect to="/"/>
                                     ) : (<>
-                                        <Button
-                                            mt="2"
-                                            w="100%"
-                                            py="6"
-                                            background="#13344C"
-                                            borderRadius="full"
-                                            color="white"
-                                            border='2px solid white'
-                                            _hover={
-                                                {
-                                                    color: '#00223E',
-                                                    bg: 'white',
-                                                    border: '2px solid #00223E',
+                                            <Button
+                                                mt="2"
+                                                w="100%"
+                                                py="6"
+                                                background="#13344C"
+                                                borderRadius="full"
+                                                color="white"
+                                                border='2px solid white'
+                                                _hover={
+                                                    {
+                                                        color: '#00223E',
+                                                        bg: 'white',
+                                                        border: '2px solid #00223E',
+                                                    }
                                                 }
-                                            }
-                                            disabled={
-                                                !Object.keys(touched).length ||
-                                                (Object.keys(touched).length &&
-                                                    Object.keys(errors).length) ||
-                                                isSubmitting
-                                            }
-                                            isLoading={isSubmitting} type="submit"
-                                        >
-                                            Login
-                                        </Button>
+                                                disabled={
+                                                    !Object.keys(touched).length ||
+                                                    (Object.keys(touched).length &&
+                                                        Object.keys(errors).length) ||
+                                                    isSubmitting
+                                                }
+                                                isLoading={isSubmitting} type="submit"
+                                            >
+                                                Login
+                                            </Button>
                                             <Button
                                                 as={ReachLink}
                                                 to='/signup'

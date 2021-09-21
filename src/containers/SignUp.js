@@ -1,5 +1,5 @@
 import cookie from 'react-cookies';
-import {Box, Text, Button} from '@chakra-ui/react';
+import {Box, Button} from '@chakra-ui/react';
 import React from 'react';
 import {Formik, Form} from 'formik';
 import * as Yup from 'yup';
@@ -23,7 +23,7 @@ const SignUp = (props) => {
                             .required('Required'),
                         password: Yup.string().required('Required'),
                     })}
-                    onSubmit={async (values, {setSubmitting, setErrors}) => {
+                    onSubmit={async (values, {setErrors}) => {
                         let payload = {
                             username: values.username,
                             password: values.password,
@@ -44,21 +44,19 @@ const SignUp = (props) => {
                     }}
                 >
                     {({
-                          values,
+
                           errors,
                           touched,
-                          handleChange,
-                          handleBlur,
-                          handleSubmit,
+
                           isSubmitting,
-                          isValidating,
+
                       }) => (
                         <Form>
                             <Box
                                 maxWidth={{sm: '85vw', md: '40vw', lg: '30vw'}}
                                 mx="auto"
                             >
-                         
+
                                 {/* Username */}
                                 <CustomInput label="Username" name="username" type="text"/>
                                 {/* Password */}
@@ -68,28 +66,28 @@ const SignUp = (props) => {
                                     {props.isLoggedIn ? (
                                         <Redirect to="/"/>
                                     ) : (<>
-                                        <Button
-                                            mt="2"
-                                            w="100%"
-                                            py="6"
-                                            background="#13344C"
-                                            borderRadius="full"
-                                            color="white"
-                                            border='2px solid white'
-                                            _hover={
-                                                {
-                                                    color: '#00223E',
-                                                    bg: 'white',
-                                                    border: '2px solid #00223E',
+                                            <Button
+                                                mt="2"
+                                                w="100%"
+                                                py="6"
+                                                background="#13344C"
+                                                borderRadius="full"
+                                                color="white"
+                                                border='2px solid white'
+                                                _hover={
+                                                    {
+                                                        color: '#00223E',
+                                                        bg: 'white',
+                                                        border: '2px solid #00223E',
+                                                    }
                                                 }
-                                            }
-                                            disabled={
-                                                !Object.keys(touched).length ||
-                                                (Object.keys(touched).length &&
-                                                    Object.keys(errors).length) ||
-                                                isSubmitting
-                                            }
-                                            isLoading={isSubmitting} type="submit">SignUp</Button>
+                                                disabled={
+                                                    !Object.keys(touched).length ||
+                                                    (Object.keys(touched).length &&
+                                                        Object.keys(errors).length) ||
+                                                    isSubmitting
+                                                }
+                                                isLoading={isSubmitting} type="submit">SignUp</Button>
                                             <Button
                                                 as={ReachLink}
                                                 to='/login'

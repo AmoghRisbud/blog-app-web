@@ -27,47 +27,54 @@ const checkSession = async setIsLoggedIn => {
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [userId, setuserId] = useState(null);
     checkSession(setIsLoggedIn);
 
     return (
-      <ChakraProvider theme={theme}>
-        <Router>
-          <NavBar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
-          <Box pt="6rem" width="100%" minH="100vh" pb="4rem">
-            <Switch>
-              <Route path="/login">
-                <Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
-              </Route>
-              <Route path="/PostDetails/:uuid">
-                <PostDetails
-                  isLoggedIn={isLoggedIn}
-                  setIsLoggedIn={setIsLoggedIn}
-                />
-              </Route>
+        <ChakraProvider theme={theme}>
+            <Router>
+                <NavBar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
+                <Box pt="6rem" width="100%" minH="100vh" pb="4rem">
+                    <Switch>
 
-              <Route path="/createpost">
-                <CreatePost
-                  isLoggedIn={isLoggedIn}
-                  setIsLoggedIn={setIsLoggedIn}
-                />
-              </Route>
-              <Route path="/signUp">
-                <SignUp isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
-              </Route>
-              <Route path="/MyPosts">
-                <MyPosts
-                  isLoggedIn={isLoggedIn}
-                  setIsLoggedIn={setIsLoggedIn}
-                />
-              </Route>
+                        <Route path="/login">
+                            <Login setuserId={setuserId} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
+                        </Route>
 
-              <Route path="/">
-                <LandingPage isLoggedIn={isLoggedIn} />
-              </Route>
-            </Switch>
-          </Box>
-        </Router>
-      </ChakraProvider>
+                        <Route path="/PostDetails/:uuid/:userId">
+                            <PostDetails
+                                userId={userId}
+                                isLoggedIn={isLoggedIn}
+                                setIsLoggedIn={setIsLoggedIn}
+                            />
+                        </Route>
+
+                        <Route path="/createpost">
+                            <CreatePost
+                                isLoggedIn={isLoggedIn}
+                                setIsLoggedIn={setIsLoggedIn}
+                            />
+                        </Route>
+
+                        <Route path="/signUp">
+                            <SignUp isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
+                        </Route>
+
+                        <Route path="/MyPosts">
+                            <MyPosts
+                                isLoggedIn={isLoggedIn}
+                                setIsLoggedIn={setIsLoggedIn}
+                            />
+                        </Route>
+
+                        <Route path="/">
+                            <LandingPage isLoggedIn={isLoggedIn}/>
+                        </Route>
+
+                    </Switch>
+                </Box>
+            </Router>
+        </ChakraProvider>
     );
 }
 
