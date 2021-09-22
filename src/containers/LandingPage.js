@@ -44,7 +44,7 @@ const LandingPage = (props) => {
             <Box width="80%" mx="auto" textColor="#367A91">
                 {!props.isLoggedIn ? (
                     <>
-                        <Text my={2}>Sign up, upload and share!</Text>
+                        <Text my={2}>Sign up, Explore and Write Blogs!</Text>
                         <Flex>
                             <Link to="/login" as={ReachLink}>
                                 <Button
