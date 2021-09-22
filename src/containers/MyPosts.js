@@ -3,9 +3,13 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import cookie from "react-cookies";
 import PostDashboard from "../components/PostDashBoard";
+import Pagination from "../components/Pagination";
 
 const MyPosts = () => {
     const [postList, setPostList] = useState([]);
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [postsPerPage] = useState(10);
 
     useEffect(() => {
         const getPostList = async () => {
@@ -27,10 +31,15 @@ const MyPosts = () => {
         };
         getPostList();
     }, []);
-    console.log(postList);
+
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = postList.slice(indexOfFirstPost, indexOfLastPost);
+
+    const paginate = pageNumber => setCurrentPage(pageNumber);
     return (
         <Box width="80%" mx="auto">
-            {postList.map((singlePost) => {
+            {currentPosts.map((singlePost) => {
                 return (
                     <PostDashboard
                         key={singlePost.id}
@@ -43,6 +52,11 @@ const MyPosts = () => {
                     />
                 );
             })}
+            <Pagination
+                postsPerPage={postsPerPage}
+                totalPosts={postList.length}
+                paginate={paginate}
+            />
         </Box>
     );
 };

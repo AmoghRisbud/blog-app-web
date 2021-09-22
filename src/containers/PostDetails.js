@@ -27,7 +27,7 @@ const PostDetails = ({...props}) => {
             }
         };
         getPostList();
-    }, []);
+    }, [uuid]);
 
     const deletepost = async () => {
         try {
@@ -62,7 +62,7 @@ const PostDetails = ({...props}) => {
                 position="relative"
             >
                 <Flex direction="row">
-                    <Text color="black" right={0} mr={5} position="absolute">
+                    <Text color="black" right={0} mr={5} position={"absolute"}>
                         Published At {new Date(post.createdAt).toDateString()}
                     </Text>
                     <Text color="black" ml={5} fontWeight="medium">

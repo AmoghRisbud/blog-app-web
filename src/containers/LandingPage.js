@@ -1,12 +1,15 @@
 import {Box, Button, Flex, Link, Text} from "@chakra-ui/react";
 import {Link as ReachLink} from "react-router-dom";
-import React from "react";
+import React, {useState} from "react";
 import cookie from "react-cookies";
 import PostDashboard from "../components/PostDashBoard";
 import axios from "axios";
+import Pagination from "../components/Pagination";
 
 const LandingPage = (props) => {
     const [postList, setPostList] = React.useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [postsPerPage] = useState(10);
 
     React.useEffect(() => {
         const getPostList = async () => {
@@ -30,7 +33,12 @@ const LandingPage = (props) => {
         };
         getPostList();
     }, []);
-    console.log(postList)
+
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = postList.slice(indexOfFirstPost, indexOfLastPost);
+
+    const paginate = pageNumber => setCurrentPage(pageNumber);
     return (
         <>
             <Box width="80%" mx="auto" textColor="#367A91">
@@ -70,7 +78,7 @@ const LandingPage = (props) => {
                     </>
                 ) : (
                     <>
-                        {postList.map((singlePost) => {
+                        {currentPosts.map((singlePost) => {
                             return (
                                 <PostDashboard
                                     key={singlePost.id}
@@ -83,7 +91,13 @@ const LandingPage = (props) => {
                                 />
                             );
                         })}
+                        <Pagination
+                            postsPerPage={postsPerPage}
+                            totalPosts={postList.length}
+                            paginate={paginate}
+                        />
                     </>
+
                 )}
             </Box>
         </>
